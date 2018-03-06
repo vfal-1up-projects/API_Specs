@@ -1,0 +1,47 @@
+{
+    "Description": "This file is a Table of Contents defining how the other files in this repo should be read.",
+    "sdkApis": {
+        "admin": {
+            "relativePath": "Admin.api.json"
+        },
+        "client": {
+            "Description": "PlayFab API suitable for publishing with Client builds",
+            "relativePath": "Client.api.json",
+            "examplePaths": [
+                "Unity-Client-Example.json"
+            ]
+        },
+        "entity": {
+            "relativePath": "Entity.api.json"
+        },
+        "matchmaker": {
+            "relativePath": "Matchmaker.api.json"
+        },
+        "server": {
+            "relativePath": "Server.api.json"
+        }
+    },
+    "siteApis": {
+        "admin": {
+            "relativePath": "Admin.api.json"
+        },
+        "client": {
+            "Description": "PlayFab API suitable for publishing with Client builds",
+            "relativePath": "Client.api.json"
+        },
+        "entity": {
+            "relativePath": "Entity.api.json"
+        },
+        "matchmaker": {
+            "relativePath": "Matchmaker.api.json"
+        },
+        "server": {
+            "relativePath": "Server.api.json"
+        }
+    },
+    "siteModel": {
+        "PlayStreamEventModels": {
+            "relativePath": "PlayStreamEventModels.json"
+        }
+    }
+}
