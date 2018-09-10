@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "180726",
+    "version": "180910",
     "title": "PlayFab Admin API",
     "description": "APIs for managing title configurations, uploaded Game Server code executables, and user data",
     "termsOfService": "https://playfab.com/terms/",
@@ -59,7 +59,7 @@
                   "description": "The Http status code as a string."
                 },
                 "data": {
-                  "$ref": "#/responses/EmptyResult"
+                  "$ref": "#/responses/EmptyResponse"
                 }
               },
               "example": {
@@ -669,6 +669,65 @@
         ]
       }
     },
+    "/Admin/CreateOpenIdConnection": {
+      "post": {
+        "operationId": "CreateOpenIdConnection",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Registers a relationship between a title and an Open ID Connect provider.",
+        "externalDocs": {
+          "url": "https://api.playfab.com/documentation/admin/method/CreateOpenIdConnection"
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/CreateOpenIdConnectionRequest"
+          }
+        ],
+        "security": [
+          {
+            "SecretKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic wrapper around all successful api calls",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "description": "The Http status code. If X-ReportErrorAsSuccess header is set to true, this will report the actual http error code."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The Http status code as a string."
+                },
+                "data": {
+                  "$ref": "#/responses/EmptyResponse"
+                }
+              },
+              "example": {
+                "code": 200,
+                "status": 200,
+                "data": null
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ApiErrorWrapper"
+          }
+        },
+        "x-AllInclusiveFlags": [
+          "Beta"
+        ],
+        "x-seeAlso": [
+          "Admin/DeleteOpenIdConnection",
+          "Admin/ListOpenIdConnection",
+          "Admin/UpdateOpenIdConnection"
+        ]
+      }
+    },
     "/Admin/CreatePlayerSharedSecret": {
       "post": {
         "operationId": "CreatePlayerSharedSecret",
@@ -920,6 +979,65 @@
         ]
       }
     },
+    "/Admin/DeleteOpenIdConnection": {
+      "post": {
+        "operationId": "DeleteOpenIdConnection",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Removes a relationship between a title and an OpenID Connect provider.",
+        "externalDocs": {
+          "url": "https://api.playfab.com/documentation/admin/method/DeleteOpenIdConnection"
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/DeleteOpenIdConnectionRequest"
+          }
+        ],
+        "security": [
+          {
+            "SecretKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic wrapper around all successful api calls",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "description": "The Http status code. If X-ReportErrorAsSuccess header is set to true, this will report the actual http error code."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The Http status code as a string."
+                },
+                "data": {
+                  "$ref": "#/responses/EmptyResponse"
+                }
+              },
+              "example": {
+                "code": 200,
+                "status": 200,
+                "data": null
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ApiErrorWrapper"
+          }
+        },
+        "x-AllInclusiveFlags": [
+          "Beta"
+        ],
+        "x-seeAlso": [
+          "Admin/CreateOpenIdConnection",
+          "Admin/ListOpenIdConnection",
+          "Admin/UpdateOpenIdConnection"
+        ]
+      }
+    },
     "/Admin/DeletePlayer": {
       "post": {
         "operationId": "DeletePlayer",
@@ -1132,7 +1250,7 @@
                   "description": "The Http status code as a string."
                 },
                 "data": {
-                  "$ref": "#/responses/EmptyResult"
+                  "$ref": "#/responses/EmptyResponse"
                 }
               },
               "example": {
@@ -4562,6 +4680,92 @@
         ]
       }
     },
+    "/Admin/ListOpenIdConnection": {
+      "post": {
+        "operationId": "ListOpenIdConnection",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Retrieves a list of all Open ID Connect providers registered to a title.",
+        "externalDocs": {
+          "url": "https://api.playfab.com/documentation/admin/method/ListOpenIdConnection"
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/ListOpenIdConnectionRequest"
+          }
+        ],
+        "security": [
+          {
+            "SecretKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic wrapper around all successful api calls",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "description": "The Http status code. If X-ReportErrorAsSuccess header is set to true, this will report the actual http error code."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The Http status code as a string."
+                },
+                "data": {
+                  "$ref": "#/responses/ListOpenIdConnectionResponse"
+                }
+              },
+              "example": {
+                "code": 200,
+                "status": 200,
+                "data": {
+                  "Connections": [
+                    {
+                      "ConnectionId": "oidconnection1",
+                      "ClientId": "example_id_1",
+                      "ClientSecret": "example_secret_1",
+                      "IssuerInformation": {
+                        "Issuer": "https://issuer.example.com/",
+                        "AuthorizationUrl": "https://issuer.example.com/authorize",
+                        "TokenUrl": "https://issuer.example.com/oauth2/token",
+                        "JsonWebKeySet": {
+                          "keys": [
+                            "..."
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "ConnectionId": "oidconnection2",
+                      "ClientId": "example_id_2",
+                      "ClientSecret": "example_secret_2",
+                      "DiscoverConfiguration": true,
+                      "IssuerInformation": {
+                        "Issuer": "https://other-issuer.example.com"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ApiErrorWrapper"
+          }
+        },
+        "x-AllInclusiveFlags": [
+          "Beta"
+        ],
+        "x-seeAlso": [
+          "Admin/CreateOpenIdConnection",
+          "Admin/DeleteOpenIdConnection",
+          "Admin/UpdateOpenIdConnection"
+        ]
+      }
+    },
     "/Admin/ListServerBuilds": {
       "post": {
         "operationId": "ListServerBuilds",
@@ -6466,6 +6670,65 @@
         ]
       }
     },
+    "/Admin/UpdateOpenIdConnection": {
+      "post": {
+        "operationId": "UpdateOpenIdConnection",
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Modifies data and credentials for an existing relationship between a title and an Open ID Connect provider",
+        "externalDocs": {
+          "url": "https://api.playfab.com/documentation/admin/method/UpdateOpenIdConnection"
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/UpdateOpenIdConnectionRequest"
+          }
+        ],
+        "security": [
+          {
+            "SecretKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic wrapper around all successful api calls",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "description": "The Http status code. If X-ReportErrorAsSuccess header is set to true, this will report the actual http error code."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The Http status code as a string."
+                },
+                "data": {
+                  "$ref": "#/responses/EmptyResponse"
+                }
+              },
+              "example": {
+                "code": 200,
+                "status": 200,
+                "data": null
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ApiErrorWrapper"
+          }
+        },
+        "x-AllInclusiveFlags": [
+          "Beta"
+        ],
+        "x-seeAlso": [
+          "Admin/CreateOpenIdConnection",
+          "Admin/DeleteOpenIdConnection",
+          "Admin/ListOpenIdConnection"
+        ]
+      }
+    },
     "/Admin/UpdatePlayerSharedSecret": {
       "post": {
         "operationId": "UpdatePlayerSharedSecret",
@@ -6819,7 +7082,7 @@
                   "description": "The Http status code as a string."
                 },
                 "data": {
-                  "$ref": "#/responses/EmptyResult"
+                  "$ref": "#/responses/EmptyResponse"
                 }
               },
               "example": {
@@ -8645,6 +8908,56 @@
         }
       }
     },
+    "CreateOpenIdConnectionRequest": {
+      "type": "object",
+      "properties": {
+        "ClientId": {
+          "description": "The client ID given by the ID provider.",
+          "type": "string"
+        },
+        "ClientSecret": {
+          "description": "The client secret given by the ID provider.",
+          "type": "string"
+        },
+        "ConnectionId": {
+          "description": "A name for the connection that identifies it within the title.",
+          "type": "string"
+        },
+        "IssuerDiscoveryUrl": {
+          "description": "The issuer URL or discovery document URL to read issuer information from",
+          "type": "string"
+        },
+        "IssuerInformation": {
+          "$ref": "#/definitions/OpenIdIssuerInformation",
+          "description": "Manually specified information for an OpenID Connect issuer.",
+          "type": "object",
+          "x-isclass": true
+        }
+      },
+      "required": [
+        "ConnectionId",
+        "ClientId",
+        "ClientSecret"
+      ],
+      "example": {
+        "ConnectionId": "oidconnection1",
+        "ClientId": "example_id_1",
+        "ClientSecret": "example_secret_1",
+        "IssuerInformation": {
+          "Issuer": "https://issuer.example.com/",
+          "AuthorizationUrl": "https://issuer.example.com/authorize",
+          "TokenUrl": "https://issuer.example.com/oauth2/token",
+          "JsonWebKeySet": {
+            "keys": [
+              "..."
+            ]
+          }
+        }
+      },
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
     "CreatePlayerSharedSecretRequest": {
       "type": "object",
       "properties": {
@@ -8947,6 +9260,24 @@
         ]
       }
     },
+    "DeleteOpenIdConnectionRequest": {
+      "type": "object",
+      "properties": {
+        "ConnectionId": {
+          "description": "unique name of the connection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ConnectionId"
+      ],
+      "example": {
+        "ConnectionId": "oidconnection1"
+      },
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
     "DeletePlayerRequest": {
       "type": "object",
       "properties": {
@@ -9085,42 +9416,35 @@
         "Confirmed"
       ]
     },
-    "EmptyResult": {
+    "EmptyResponse": {
       "type": "object",
       "properties": {}
     },
     "EntityKey": {
-      "description": "Entity identifier class that contains both the ID and type.",
+      "description": "Combined entity type and ID structure which uniquely identifies a single entity.",
       "type": "object",
       "properties": {
         "Id": {
-          "description": "Entity profile ID.",
+          "description": "Unique ID of the entity.",
           "type": "string"
         },
         "Type": {
-          "$ref": "#/definitions/EntityTypes",
-          "description": "Entity type. Optional to be used but one of EntityType or EntityTypeString must be set.",
-          "type": "string",
-          "x-isenum": true
+          "description": "Entity type. See https://api.playfab.com/docs/tutorials/entities/entitytypes",
+          "type": "string"
         },
         "TypeString": {
-          "description": "Entity type. Optional to be used but one of EntityType or EntityTypeString must be set.",
-          "type": "string"
+          "description": "Alternate name for Type.",
+          "type": "string",
+          "x-deprecation": {
+            "ProposedAfter": "6/1/2018",
+            "DeprecatedAfter": "7/1/2018",
+            "ObsoleteAfter": "8/1/2018",
+            "ReplacedBy": "Type"
+          }
         }
       },
       "required": [
         "Id"
-      ]
-    },
-    "EntityTypes": {
-      "type": "object",
-      "enum": [
-        "title",
-        "master_player_account",
-        "title_player_account",
-        "character",
-        "group",
-        "service"
       ]
     },
     "ExecuteCloudScriptResult": {
@@ -9659,20 +9983,25 @@
         "NoValidCertificateForAad",
         "InvalidCertificateForAad",
         "DuplicateDropTableId",
-        "GameServerOk",
-        "GameServerAccepted",
-        "GameServerNoContent",
-        "GameServerBadRequest",
-        "GameServerUnauthorized",
-        "GameServerForbidden",
-        "GameServerNotFound",
-        "GameServerConflict",
-        "GameServerInternalServerError",
-        "GameServerServiceUnavailable",
+        "MultiplayerServerError",
+        "MultiplayerServerTooManyRequests",
+        "MultiplayerServerNoContent",
+        "MultiplayerServerBadRequest",
+        "MultiplayerServerUnauthorized",
+        "MultiplayerServerForbidden",
+        "MultiplayerServerNotFound",
+        "MultiplayerServerConflict",
+        "MultiplayerServerInternalServerError",
+        "MultiplayerServerUnavailable",
         "ExplicitContentDetected",
         "PIIContentDetected",
         "InvalidScheduledTaskParameter",
         "PerEntityEventRateLimitExceeded",
+        "TitleDefaultLanguageNotSet",
+        "EmailTemplateMissingDefaultVersion",
+        "FacebookInstantGamesIdNotLinked",
+        "InvalidFacebookInstantGamesSignature",
+        "FacebookInstantGamesAuthNotConfiguredForTitle",
         "MatchmakingEntityInvalid",
         "MatchmakingPlayerAttributesInvalid",
         "MatchmakingCreateRequestMissing",
@@ -9683,12 +10012,12 @@
         "MatchmakingTicketIdMissing",
         "MatchmakingMatchIdMissing",
         "MatchmakingMatchIdIdMissing",
-        "MatchmakingHopperIdMissing",
+        "MatchmakingQueueNameMissing",
         "MatchmakingTitleIdMissing",
         "MatchmakingTicketIdIdMissing",
         "MatchmakingPlayerIdMissing",
         "MatchmakingJoinRequestUserMissing",
-        "MatchmakingHopperConfigNotFound",
+        "MatchmakingQueueConfigNotFound",
         "MatchmakingMatchNotFound",
         "MatchmakingTicketNotFound",
         "MatchmakingCreateTicketServerIdentityInvalid",
@@ -9702,10 +10031,12 @@
         "MatchmakingPlayerIdentityMismatch",
         "MatchmakingAlreadyJoinedTicket",
         "MatchmakingTicketAlreadyCompleted",
-        "MatchmakingHopperIdInvalid",
-        "MatchmakingHopperConfigInvalid",
+        "MatchmakingQueueNameInvalid",
+        "MatchmakingQueueConfigInvalid",
         "MatchmakingMemberProfileInvalid",
-        "WriteAttemptedDuringExport"
+        "WriteAttemptedDuringExport",
+        "NintendoSwitchDeviceIdNotLinked",
+        "MatchmakingNotEnabled"
       ]
     },
     "GetActionGroupResult": {
@@ -10413,13 +10744,31 @@
           "x-isenum": true
         },
         "ServerAddress": {
-          "description": "IP address for this Game Server Instance",
+          "description": "IPV4 address of the game server instance",
+          "type": "string",
+          "x-deprecation": {
+            "ProposedAfter": "7/30/2018",
+            "DeprecatedAfter": "9/30/2018",
+            "ObsoleteAfter": "10/30/2018",
+            "ReplacedBy": "ServerIPV4Address"
+          }
+        },
+        "ServerIPV4Address": {
+          "description": "IPV4 address of the server",
+          "type": "string"
+        },
+        "ServerIPV6Address": {
+          "description": "IPV6 address of the server",
           "type": "string"
         },
         "ServerPort": {
           "description": "communication port for this Game Server Instance",
           "type": "number",
           "x-actualtype": "uint32"
+        },
+        "ServerPublicDNSName": {
+          "description": "Public DNS name (if any) of the server",
+          "type": "string"
         },
         "StartTime": {
           "description": "time when the Game Server Instance was created",
@@ -11966,6 +12315,58 @@
         ]
       }
     },
+    "ListOpenIdConnectionRequest": {
+      "type": "object",
+      "properties": {},
+      "example": {},
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
+    "ListOpenIdConnectionResponse": {
+      "type": "object",
+      "properties": {
+        "Connections": {
+          "description": "The list of Open ID Connections",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OpenIdConnection"
+          },
+          "x-isclass": true
+        }
+      },
+      "example": {
+        "Connections": [
+          {
+            "ConnectionId": "oidconnection1",
+            "ClientId": "example_id_1",
+            "ClientSecret": "example_secret_1",
+            "IssuerInformation": {
+              "Issuer": "https://issuer.example.com/",
+              "AuthorizationUrl": "https://issuer.example.com/authorize",
+              "TokenUrl": "https://issuer.example.com/oauth2/token",
+              "JsonWebKeySet": {
+                "keys": [
+                  "..."
+                ]
+              }
+            }
+          },
+          {
+            "ConnectionId": "oidconnection2",
+            "ClientId": "example_id_2",
+            "ClientSecret": "example_secret_2",
+            "DiscoverConfiguration": true,
+            "IssuerInformation": {
+              "Issuer": "https://other-issuer.example.com"
+            }
+          }
+        ]
+      },
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
     "ListVirtualCurrencyTypesRequest": {
       "type": "object",
       "properties": {},
@@ -12049,7 +12450,9 @@
         "WindowsHello",
         "GameServer",
         "CustomServer",
-        "NintendoSwitch"
+        "NintendoSwitch",
+        "FacebookInstantGames",
+        "OpenIdConnect"
       ]
     },
     "LogStatement": {
@@ -12388,6 +12791,69 @@
           "type": "string"
         }
       }
+    },
+    "OpenIdConnection": {
+      "type": "object",
+      "properties": {
+        "ClientId": {
+          "description": "The client ID given by the ID provider.",
+          "type": "string"
+        },
+        "ClientSecret": {
+          "description": "The client secret given by the ID provider.",
+          "type": "string"
+        },
+        "ConnectionId": {
+          "description": "A name for the connection to identify it within the title.",
+          "type": "string"
+        },
+        "DiscoverConfiguration": {
+          "description": "Shows if data about the connection will be loaded from the issuer's discovery document",
+          "type": "boolean"
+        },
+        "IssuerInformation": {
+          "$ref": "#/definitions/OpenIdIssuerInformation",
+          "description": "Information for an OpenID Connect provider.",
+          "type": "object",
+          "x-isclass": true
+        }
+      },
+      "required": [
+        "DiscoverConfiguration"
+      ],
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
+    "OpenIdIssuerInformation": {
+      "type": "object",
+      "properties": {
+        "AuthorizationUrl": {
+          "description": "Authorization endpoint URL to direct users to for signin.",
+          "type": "string"
+        },
+        "Issuer": {
+          "description": "The URL of the issuer of the tokens. This must match the exact URL of the issuer field in tokens.",
+          "type": "string"
+        },
+        "JsonWebKeySet": {
+          "description": "JSON Web Key Set for validating the signature of tokens.",
+          "type": "object"
+        },
+        "TokenUrl": {
+          "description": "Token endpoint URL for code verification.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Issuer",
+        "AuthorizationUrl",
+        "TokenUrl",
+        "JsonWebKeySet"
+      ],
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
     },
     "PermissionStatement": {
       "type": "object",
@@ -14535,6 +15001,43 @@
         "Revision": 5
       }
     },
+    "UpdateOpenIdConnectionRequest": {
+      "type": "object",
+      "properties": {
+        "ClientId": {
+          "description": "The client ID given by the ID provider.",
+          "type": "string"
+        },
+        "ClientSecret": {
+          "description": "The client secret given by the ID provider.",
+          "type": "string"
+        },
+        "ConnectionId": {
+          "description": "A name for the connection that identifies it within the title.",
+          "type": "string"
+        },
+        "IssuerDiscoveryUrl": {
+          "description": "The issuer URL or discovery document URL to read issuer information from",
+          "type": "string"
+        },
+        "IssuerInformation": {
+          "$ref": "#/definitions/OpenIdIssuerInformation",
+          "description": "Manually specified information for an OpenID Connect issuer.",
+          "type": "object",
+          "x-isclass": true
+        }
+      },
+      "required": [
+        "ConnectionId"
+      ],
+      "example": {
+        "ConnectionId": "oidconnection1",
+        "ClientSecret": "new_example_secret"
+      },
+      "x-AnyInclusiveFlags": [
+        "Beta"
+      ]
+    },
     "UpdatePlayerSharedSecretRequest": {
       "type": "object",
       "properties": {
@@ -14989,6 +15492,12 @@
           "type": "object",
           "x-isclass": true
         },
+        "FacebookInstantGamesIdInfo": {
+          "$ref": "#/definitions/UserFacebookInstantGamesIdInfo",
+          "description": "Facebook Instant Games account information, if a Facebook Instant Games account has been linked",
+          "type": "object",
+          "x-isclass": true
+        },
         "GameCenterInfo": {
           "$ref": "#/definitions/UserGameCenterInfo",
           "description": "User Gamecenter information, if a Gamecenter account has been linked",
@@ -15011,6 +15520,20 @@
           "$ref": "#/definitions/UserKongregateInfo",
           "description": "User Kongregate account information, if a Kongregate account has been linked",
           "type": "object",
+          "x-isclass": true
+        },
+        "NintendoSwitchDeviceIdInfo": {
+          "$ref": "#/definitions/UserNintendoSwitchDeviceIdInfo",
+          "description": "Nintendo Switch account information, if a Nintendo Switch account has been linked",
+          "type": "object",
+          "x-isclass": true
+        },
+        "OpenIdInfo": {
+          "description": "OpenID Connect information, if any OpenID Connect accounts have been linked",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserOpenIdInfo"
+          },
           "x-isclass": true
         },
         "PlayFabId": {
@@ -15050,6 +15573,12 @@
         "Username": {
           "description": "User account name in the PlayFab service",
           "type": "string"
+        },
+        "WindowsHelloInfo": {
+          "$ref": "#/definitions/UserWindowsHelloInfo",
+          "description": "Windows Hello account information, if a Windows Hello account has been linked",
+          "type": "object",
+          "x-isclass": true
         },
         "XboxInfo": {
           "$ref": "#/definitions/UserXboxInfo",
@@ -15184,6 +15713,15 @@
         }
       }
     },
+    "UserFacebookInstantGamesIdInfo": {
+      "type": "object",
+      "properties": {
+        "FacebookInstantGamesId": {
+          "description": "Facebook Instant Games ID",
+          "type": "string"
+        }
+      }
+    },
     "UserGameCenterInfo": {
       "type": "object",
       "properties": {
@@ -15236,6 +15774,32 @@
         }
       }
     },
+    "UserNintendoSwitchDeviceIdInfo": {
+      "type": "object",
+      "properties": {
+        "NintendoSwitchDeviceId": {
+          "description": "Nintendo Switch Device ID",
+          "type": "string"
+        }
+      }
+    },
+    "UserOpenIdInfo": {
+      "type": "object",
+      "properties": {
+        "ConnectionId": {
+          "description": "OpenID Connection ID",
+          "type": "string"
+        },
+        "Issuer": {
+          "description": "OpenID Issuer",
+          "type": "string"
+        },
+        "Subject": {
+          "description": "OpenID Subject",
+          "type": "string"
+        }
+      }
+    },
     "UserOrigination": {
       "type": "object",
       "enum": [
@@ -15257,7 +15821,10 @@
         "Parse",
         "Twitch",
         "WindowsHello",
-        "ServerCustomId"
+        "ServerCustomId",
+        "NintendoSwitchDeviceId",
+        "FacebookInstantGamesId",
+        "OpenIdConnect"
       ]
     },
     "UserPrivateAccountInfo": {
@@ -15360,6 +15927,19 @@
         },
         "TwitchUserName": {
           "description": "Twitch Username",
+          "type": "string"
+        }
+      }
+    },
+    "UserWindowsHelloInfo": {
+      "type": "object",
+      "properties": {
+        "WindowsHelloDeviceName": {
+          "description": "Windows Hello Device Name",
+          "type": "string"
+        },
+        "WindowsHelloPublicKeyHash": {
+          "description": "Windows Hello Public Key Hash",
           "type": "string"
         }
       }
@@ -15541,6 +16121,14 @@
         "$ref": "#/definitions/CreateCloudScriptTaskRequest"
       }
     },
+    "CreateOpenIdConnectionRequest": {
+      "name": "CreateOpenIdConnectionRequest",
+      "in": "body",
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CreateOpenIdConnectionRequest"
+      }
+    },
     "CreatePlayerSharedSecretRequest": {
       "name": "CreatePlayerSharedSecretRequest",
       "in": "body",
@@ -15571,6 +16159,14 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DeleteMasterPlayerAccountRequest"
+      }
+    },
+    "DeleteOpenIdConnectionRequest": {
+      "name": "DeleteOpenIdConnectionRequest",
+      "in": "body",
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DeleteOpenIdConnectionRequest"
       }
     },
     "DeletePlayerRequest": {
@@ -15917,6 +16513,14 @@
         "$ref": "#/definitions/ListBuildsRequest"
       }
     },
+    "ListOpenIdConnectionRequest": {
+      "name": "ListOpenIdConnectionRequest",
+      "in": "body",
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListOpenIdConnectionRequest"
+      }
+    },
     "ListVirtualCurrencyTypesRequest": {
       "name": "ListVirtualCurrencyTypesRequest",
       "in": "body",
@@ -16141,6 +16745,14 @@
         "$ref": "#/definitions/UpdateCloudScriptRequest"
       }
     },
+    "UpdateOpenIdConnectionRequest": {
+      "name": "UpdateOpenIdConnectionRequest",
+      "in": "body",
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/UpdateOpenIdConnectionRequest"
+      }
+    },
     "UpdatePlayerSharedSecretRequest": {
       "name": "UpdatePlayerSharedSecretRequest",
       "in": "body",
@@ -16311,10 +16923,10 @@
         "$ref": "#/definitions/DeleteUsersResult"
       }
     },
-    "EmptyResult": {
+    "EmptyResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/EmptyResult"
+        "$ref": "#/definitions/EmptyResponse"
       }
     },
     "ExportMasterPlayerDataResult": {
@@ -16543,6 +17155,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListBuildsResult"
+      }
+    },
+    "ListOpenIdConnectionResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListOpenIdConnectionResponse"
       }
     },
     "ListVirtualCurrencyTypesResult": {
@@ -18300,45 +18918,45 @@
       "id": 1378,
       "name": "DuplicateDropTableId"
     },
-    "GameServerOk": {
+    "MultiplayerServerError": {
       "id": 1379,
-      "name": "GameServerOk"
+      "name": "MultiplayerServerError"
     },
-    "GameServerAccepted": {
+    "MultiplayerServerTooManyRequests": {
       "id": 1380,
-      "name": "GameServerAccepted"
+      "name": "MultiplayerServerTooManyRequests"
     },
-    "GameServerNoContent": {
+    "MultiplayerServerNoContent": {
       "id": 1381,
-      "name": "GameServerNoContent"
+      "name": "MultiplayerServerNoContent"
     },
-    "GameServerBadRequest": {
+    "MultiplayerServerBadRequest": {
       "id": 1382,
-      "name": "GameServerBadRequest"
+      "name": "MultiplayerServerBadRequest"
     },
-    "GameServerUnauthorized": {
+    "MultiplayerServerUnauthorized": {
       "id": 1383,
-      "name": "GameServerUnauthorized"
+      "name": "MultiplayerServerUnauthorized"
     },
-    "GameServerForbidden": {
+    "MultiplayerServerForbidden": {
       "id": 1384,
-      "name": "GameServerForbidden"
+      "name": "MultiplayerServerForbidden"
     },
-    "GameServerNotFound": {
+    "MultiplayerServerNotFound": {
       "id": 1385,
-      "name": "GameServerNotFound"
+      "name": "MultiplayerServerNotFound"
     },
-    "GameServerConflict": {
+    "MultiplayerServerConflict": {
       "id": 1386,
-      "name": "GameServerConflict"
+      "name": "MultiplayerServerConflict"
     },
-    "GameServerInternalServerError": {
+    "MultiplayerServerInternalServerError": {
       "id": 1387,
-      "name": "GameServerInternalServerError"
+      "name": "MultiplayerServerInternalServerError"
     },
-    "GameServerServiceUnavailable": {
+    "MultiplayerServerUnavailable": {
       "id": 1388,
-      "name": "GameServerServiceUnavailable"
+      "name": "MultiplayerServerUnavailable"
     },
     "ExplicitContentDetected": {
       "id": 1389,
@@ -18355,6 +18973,26 @@
     "PerEntityEventRateLimitExceeded": {
       "id": 1392,
       "name": "PerEntityEventRateLimitExceeded"
+    },
+    "TitleDefaultLanguageNotSet": {
+      "id": 1393,
+      "name": "TitleDefaultLanguageNotSet"
+    },
+    "EmailTemplateMissingDefaultVersion": {
+      "id": 1394,
+      "name": "EmailTemplateMissingDefaultVersion"
+    },
+    "FacebookInstantGamesIdNotLinked": {
+      "id": 1395,
+      "name": "FacebookInstantGamesIdNotLinked"
+    },
+    "InvalidFacebookInstantGamesSignature": {
+      "id": 1396,
+      "name": "InvalidFacebookInstantGamesSignature"
+    },
+    "FacebookInstantGamesAuthNotConfiguredForTitle": {
+      "id": 1397,
+      "name": "FacebookInstantGamesAuthNotConfiguredForTitle"
     },
     "MatchmakingEntityInvalid": {
       "id": 2001,
@@ -18396,9 +19034,9 @@
       "id": 2010,
       "name": "MatchmakingMatchIdIdMissing"
     },
-    "MatchmakingHopperIdMissing": {
+    "MatchmakingQueueNameMissing": {
       "id": 2011,
-      "name": "MatchmakingHopperIdMissing"
+      "name": "MatchmakingQueueNameMissing"
     },
     "MatchmakingTitleIdMissing": {
       "id": 2012,
@@ -18416,9 +19054,9 @@
       "id": 2015,
       "name": "MatchmakingJoinRequestUserMissing"
     },
-    "MatchmakingHopperConfigNotFound": {
+    "MatchmakingQueueConfigNotFound": {
       "id": 2016,
-      "name": "MatchmakingHopperConfigNotFound"
+      "name": "MatchmakingQueueConfigNotFound"
     },
     "MatchmakingMatchNotFound": {
       "id": 2017,
@@ -18472,13 +19110,13 @@
       "id": 2029,
       "name": "MatchmakingTicketAlreadyCompleted"
     },
-    "MatchmakingHopperIdInvalid": {
+    "MatchmakingQueueNameInvalid": {
       "id": 2030,
-      "name": "MatchmakingHopperIdInvalid"
+      "name": "MatchmakingQueueNameInvalid"
     },
-    "MatchmakingHopperConfigInvalid": {
+    "MatchmakingQueueConfigInvalid": {
       "id": 2031,
-      "name": "MatchmakingHopperConfigInvalid"
+      "name": "MatchmakingQueueConfigInvalid"
     },
     "MatchmakingMemberProfileInvalid": {
       "id": 2032,
@@ -18487,6 +19125,14 @@
     "WriteAttemptedDuringExport": {
       "id": 2033,
       "name": "WriteAttemptedDuringExport"
+    },
+    "NintendoSwitchDeviceIdNotLinked": {
+      "id": 2034,
+      "name": "NintendoSwitchDeviceIdNotLinked"
+    },
+    "MatchmakingNotEnabled": {
+      "id": 2035,
+      "name": "MatchmakingNotEnabled"
     }
   }
 }
