@@ -5047,6 +5047,60 @@
           ]
         },
         {
+          "name": "title_saved_survey",
+          "className": "TitleSavedSurveyEventData",
+          "classNameSpace": "PlayFab.PlayStreamEvent.Models",
+          "assembly": "PlayFab.PlayStreamEvent.Models",
+          "description": "This event is triggered when a game's survey is saved.",
+          "properties": [
+            {
+              "name": "Genre",
+              "description": "Title Genre",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            },
+            {
+              "name": "Monetization",
+              "description": "Array of Monetization methods used by the Title",
+              "collection": "array",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            },
+            {
+              "name": "Platforms",
+              "description": "Array of Platforms used by the Title",
+              "collection": "array",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            },
+            {
+              "name": "PlayerModes",
+              "description": "Array of PlayerModes used by the Title",
+              "collection": "array",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            },
+            {
+              "name": "TitleName",
+              "description": "Name of the Title",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            },
+            {
+              "name": "TitleWebsite",
+              "description": "Website for the Title",
+              "jsontype": "String",
+              "actualtype": "String",
+              "optional": true
+            }
+          ]
+        },
+        {
           "name": "title_scheduled_cloudscript_executed",
           "className": "TitleScheduledCloudScriptExecutedEventData",
           "classNameSpace": "PlayFab.PlayStreamEvent.Models",
