@@ -1780,6 +1780,13 @@
           "optional": true
         },
         {
+          "name": "LastStateTransitionTime",
+          "description": "The time (UTC) at which a change in the multiplayer server state was observed.",
+          "jsontype": "String",
+          "actualtype": "DateTime",
+          "optional": true
+        },
+        {
           "name": "Ports",
           "description": "The ports the multiplayer server uses.",
           "collection": "array",
@@ -2536,6 +2543,13 @@
           "optional": true
         },
         {
+          "name": "LastStateTransitionTime",
+          "description": "The time (UTC) at which a change in the multiplayer server state was observed.",
+          "jsontype": "String",
+          "actualtype": "DateTime",
+          "optional": true
+        },
+        {
           "name": "Region",
           "description": "The region the multiplayer server is located in.",
           "jsontype": "String",
@@ -2755,6 +2769,13 @@
           "description": "The IPv4 address of the virtual machine that is hosting this multiplayer server.",
           "jsontype": "String",
           "actualtype": "String",
+          "optional": true
+        },
+        {
+          "name": "LastStateTransitionTime",
+          "description": "The time (UTC) at which a change in the multiplayer server state was observed.",
+          "jsontype": "String",
+          "actualtype": "DateTime",
           "optional": true
         },
         {
