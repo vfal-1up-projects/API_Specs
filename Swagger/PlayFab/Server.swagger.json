@@ -695,6 +695,63 @@
         ]
       }
     },
+    "/Server/DeletePlayer": {
+      "post": {
+        "operationId": "DeletePlayer",
+        "tags": [
+          "Account Management"
+        ],
+        "description": "Removes a user's player account from a title and deletes all associated data",
+        "externalDocs": {
+          "url": "https://api.playfab.com/documentation/server/method/DeletePlayer"
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/DeletePlayerRequest"
+          }
+        ],
+        "security": [
+          {
+            "SecretKey": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The basic wrapper around all successful api calls",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "description": "The Http status code. If X-ReportErrorAsSuccess header is set to true, this will report the actual http error code."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "The Http status code as a string."
+                },
+                "data": {
+                  "$ref": "#/responses/DeletePlayerResult"
+                }
+              },
+              "example": {
+                "code": 200,
+                "status": 200,
+                "data": null
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ApiErrorWrapper"
+          }
+        },
+        "x-requestDetails": "Deletes all data associated with the player, including statistics, custom data, inventory, purchases, virtual currency balances, characters and shared group memberships. Removes the player from all leaderboards and player search indexes. Does not delete PlayStream event history associated with the player. Does not delete the publisher user account that created the player in the title nor associated data such as username, password, email address, account linkages, or friends list. Note, this API queues the player for deletion and returns immediately. It may take several minutes or more before all player data is fully deleted. Until the player data is fully deleted, attempts to recreate the player with the same user account in the same title will fail with the 'AccountDeleted' error. This API must be enabled for use as an option in the game manager website. It is disabled by default.",
+        "x-errors": [
+          "AccountDeleted",
+          "AccountNotFound",
+          "APINotEnabledForGameServerAccess"
+        ]
+      }
+    },
     "/Server/DeleteSharedGroup": {
       "post": {
         "operationId": "DeleteSharedGroup",
@@ -755,7 +812,7 @@
         "tags": [
           "Player Data Management"
         ],
-        "description": "Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.",
+        "description": "Deletes custom data, all account linkages, and statistics.",
         "externalDocs": {
           "url": "https://api.playfab.com/documentation/server/method/DeleteUsers"
         },
@@ -798,7 +855,13 @@
             "$ref": "#/responses/ApiErrorWrapper"
           }
         },
-        "x-requestDetails": "Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user. This API must be enabled for use as an option in the game manager website. It is disabled by default.",
+        "x-requestDetails": "Note that this action cannot be undone. It will unlink all accounts, reset any statistics and leaderboards, and clear out any stored custom data for the user. This API must be enabled for use as an option in the game manager website. It is disabled by default.",
+        "x-deprecation": {
+          "ProposedAfter": "8/29/2018",
+          "DeprecatedAfter": "9/29/2018",
+          "ObsoleteAfter": "10/29/2018",
+          "ReplacedBy": "DeletePlayer"
+        },
         "x-errors": [
           "APINotEnabledForGameServerAccess",
           "InvalidPublisherId",
@@ -9656,6 +9719,25 @@
       "properties": {},
       "example": {}
     },
+    "DeletePlayerRequest": {
+      "type": "object",
+      "properties": {
+        "PlayFabId": {
+          "description": "Unique PlayFab assigned ID of the user on whom the operation will be performed.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "PlayFabId"
+      ],
+      "example": {
+        "PlayFabId": "A68C908B66C23C5"
+      }
+    },
+    "DeletePlayerResult": {
+      "type": "object",
+      "properties": {}
+    },
     "DeleteSharedGroupRequest": {
       "type": "object",
       "properties": {
@@ -9695,11 +9777,21 @@
           "203945882"
         ],
         "TitleId": "aaa"
+      },
+      "x-deprecation": {
+        "ProposedAfter": "8/29/2018",
+        "DeprecatedAfter": "9/29/2018",
+        "ObsoleteAfter": "10/29/2018"
       }
     },
     "DeleteUsersResult": {
       "type": "object",
-      "properties": {}
+      "properties": {},
+      "x-deprecation": {
+        "ProposedAfter": "8/29/2018",
+        "DeprecatedAfter": "9/29/2018",
+        "ObsoleteAfter": "10/29/2018"
+      }
     },
     "DeregisterGameRequest": {
       "type": "object",
@@ -17454,6 +17546,14 @@
         "$ref": "#/definitions/DeleteCharacterFromUserRequest"
       }
     },
+    "DeletePlayerRequest": {
+      "name": "DeletePlayerRequest",
+      "in": "body",
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DeletePlayerRequest"
+      }
+    },
     "DeleteSharedGroupRequest": {
       "name": "DeleteSharedGroupRequest",
       "in": "body",
@@ -18284,6 +18384,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DeleteCharacterFromUserResult"
+      }
+    },
+    "DeletePlayerResult": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DeletePlayerResult"
       }
     },
     "DeleteUsersResult": {
